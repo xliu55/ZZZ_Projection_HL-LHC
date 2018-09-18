@@ -194,7 +194,7 @@ void DrawHists(TCanvas *c, TString name, TH1D* signal, TH1D* ttbar, TH1D* otherb
   leg->SetShadowColor(0);
 
   leg->AddEntry(signal, "ZZZ", "lf");
-  leg->AddEntry(ttbar, "WW", "lf");
+  leg->AddEntry(ttbar, "TT", "lf");
   leg->AddEntry(otherb, "Other", "lf");
 
   otherb->Draw("hist E");
