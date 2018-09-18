@@ -42,11 +42,11 @@ void analysis() {
   HistHolder ttbar;  initHistHolder(ttbar, "tt");
   HistHolder otherb; initHistHolder(otherb, "bgd");
   
-  int l3[11] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-  int l2[11] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-  int l1[11] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-  int l0[11] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-  float scale[11] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+  int l3[13] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+  int l2[13] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+  int l1[13] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+  int l0[13] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+  float scale[13] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
   
   /*
   int lll[11] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
@@ -130,7 +130,7 @@ void analysis() {
   float zhzz=selection("events2/ZHToZZ.root", otherb, lll[9], eej[9], emj[9], mmj[9], ejj[9], mjj[9], jjj[9], scale[9]);
   float zz4l=selection("events2/ZZTo4L.root", ttbar, lll[10], eej[10], emj[10], mmj[10], ejj[10], mjj[10], jjj[10], scale[10]);
   */
-  
+  /*
   float zzz=selection("events2/ZZZ.root", signal, l3[0], l2[0], l1[0], l0[0], scale[0]);
   float ttz=selection("events2/TTZ.root", otherb, l3[1], l2[1], l1[1], l0[1], scale[1]);
   float tt =selection("events2/TT_350.root", otherb, l3[2], l2[2], l1[2], l0[2], scale[2]);
@@ -142,22 +142,49 @@ void analysis() {
   float hzz=selection("events2/HZZ.root", otherb, l3[8], l2[8], l1[8], l0[8], scale[8]);
   //float zhzz=selection("events2/ZHToZZ.root", otherb, l3[9], l2[9], l1[9], l0[9], scale[9]);
   float zz4l=selection("events2/ZZTo4L.root", otherb, l3[10], l2[10], l1[10], l0[10], scale[10]);
-  /*for (int i=0; i<11; i++)
-    cout << scale[i]*l2[i] << " ";
-  cout << endl;*/
+  */
+  
+  float zzz=selection("events4/ZZZ.root", signal, l3[0], l2[0], l1[0], l0[0], scale[0]);
+  float ttx=selection("events4/TTXX_comb.root", otherb, l3[1], l2[1], l1[1], l0[1], scale[1]);
+  float tt =selection("events4/TT.root", ttbar, l3[2], l2[2], l1[2], l0[2], scale[2]);
+  float www=selection("events4/WWW.root", otherb, l3[3], l2[3], l1[3], l0[3], scale[3]);
+  float wzz=selection("events4/WZZ.root", otherb, l3[4], l2[4], l1[4], l0[4], scale[4]);
+  float wwz=selection("events4/WWZ.root", otherb, l3[5], l2[5], l1[5], l0[5], scale[5]);
+  float ww =selection("events4/WW.root", otherb, l3[6], l2[6], l1[6], l0[6], scale[6]);
+  float ssww =selection("events4/ssWW_comb.root", otherb, l3[7], l2[7], l1[7], l0[7], scale[7]);
+  float higgs =selection("events4/Higgs_comb.root", otherb, l3[8], l2[8], l1[8], l0[8], scale[8]);
+  float zz2l =selection("events4/ZZTo2L2Q.root", otherb, l3[9], l2[9], l1[9], l0[9], scale[9]);
+  float zz4l=selection("events4/ZZTo4L.root", otherb, l3[10], l2[10], l1[10], l0[10], scale[10]);
+  float wz=selection("events4/WZ3LNu_0j.root", otherb, l3[11], l2[11], l1[11], l0[11], scale[11]);
+  float dy=selection("events4/DYJets_comb.root", otherb, l3[12], l2[12], l1[12], l0[12], scale[12]);
+
+  cout << "expected yields --------------------------" << endl;
+  for (int i=0; i<13; i++)
+    {
+      cout << scale[i]*l3[i] << " " << scale[i]*l2[i] << " " << scale[i]*l1[i] << " " << scale[i]*l0[i] << endl;
+    }
   
   
   // output the uncertainties of the expected yields
-  for (int i=0; i<11; i++)
+  cout << "systematic uncertainties ------------------------------" << endl;
+  for (int i=0; i<13; i++)
     {
-      //cout << scale[i]*l3[i]/TMath::Sqrt(l3[i]+1) << " " << scale[i]*l2[i]/TMath::Sqrt(l2[i]+1) << " " << scale[i]*l1[i]/TMath::Sqrt(l1[i]+1) << " " << scale[i]*l0[i]/TMath::Sqrt(l0[i]+1) << " " << endl;
-      if (i != 9)
-	{
-	  int temp = l3[i] + l2[i] + l1[i] + l0[i];
-	  cout << scale[i]*temp/TMath::Sqrt(temp+1) << endl;
-	}
+      //systematic uncertainties
+      float u3 = scale[i]*l3[i]*TMath::Sqrt(0.01*0.01+6*0.005*0.005);
+      float u2 = scale[i]*l2[i]*TMath::Sqrt(0.01*0.01+4*0.005*0.005+2*0.022*0.022);
+      float u1 = scale[i]*l1[i]*TMath::Sqrt(0.01*0.01+2*0.005*0.005+4*0.022*0.022);
+      float u0 = scale[i]*l0[i]*TMath::Sqrt(0.01*0.01+6*0.022*0.022);
+      cout << u3 << " " << u2 << " " << u1 << " " << u0 << " " << TMath::Sqrt(u3*u3+u2*u2+u1*u1+u0*u0) << endl;    
     }
- 
+  cout << "statistical uncertainties ------------------------------" << endl;
+  for (int i=0; i<13; i++)
+    {   
+      //MC uncertainties
+      int temp = l3[i] + l2[i] + l1[i] + l0[i];
+      cout << scale[i]*l3[i]/TMath::Sqrt(l3[i]+1) << " " << scale[i]*l2[i]/TMath::Sqrt(l2[i]+1) << " " << scale[i]*l1[i]/TMath::Sqrt(l1[i]+1) << " " << scale[i]*l0[i]/TMath::Sqrt(l0[i]+1) << " " << scale[i]*temp/TMath::Sqrt(temp+1) << endl;     
+    }
+  
+  
   /*
   cdir[0]->cd();
   TH1D *ZZZ = (TH1D*) cdir[0]->Get("ZZZ");
@@ -451,30 +478,7 @@ void analysis() {
   float ttw=selection("events3/TTWJetsToLNu.root", otherb, l3[10], l2[10], l1[10], l0[10], scale[10]);
   ttw+=selection("events3/TTWJetsToQQ.root", otherb, l3[10], l2[10], l1[10], l0[10], scale[10]);
   */
-  /*
-  float bkgds = ttz+tt+www+wzz+wwz+ww+zz2l+hzz+zhzz+zz4l;
   
-  cout << "======= Event yields =======" << endl;
-  cout << "  ZZZ: " << zzz<< endl;
-  cout << "Total: " << bkgds<< endl;
-  cout << "Backgrounds" << endl;
-  cout << "  TTZ: " << ttz<< endl;
-  cout << "  TT : " << tt<< endl;
-  cout << "  WWW: " << www<< endl;
-  cout << "  WZZ: " << wzz<< endl;
-  cout << "  WWZ: " << wwz<< endl;
-  cout << "  WW : " << ww<< endl;
-  cout << "  ZZTo2L2Q : " << zz2l<< endl;
-  cout << "  HZZ : " << hzz<< endl;
-  cout << "  ZHToZZ : " << zhzz<< endl;
-  cout << "  ZZTo4L : " << zz4l<< endl;
-  cout << endl;
-
-  cout << "S/B = " << zzz / bkgds << endl;
-  cout << "S/sqrt(B) = " << zzz / sqrt(bkgds) << endl;
-  cout << "============================" << endl;
-  */
-  /*
   TCanvas *c = MakeCanvas("c","c",800, 600);
   gStyle->SetOptStat(0);
   gStyle->SetTitleX(0.1f);
@@ -483,27 +487,27 @@ void analysis() {
   c->SetRightMargin(0.09);
   
   //Drawing plots (look at drawFxns.hh)
-  DrawHists(c, "constructed Z mass from electron2.png", signal.zMe, ttbar.zMe, otherb.zMe);
-  DrawHists(c, "constructed Z mass from muon2.png", signal.zMm, ttbar.zMm, otherb.zMm);
-  DrawHists(c, "constructed Z mass from jet2.png", signal.zMj, ttbar.zMj, otherb.zMj);
+  DrawHists(c, "constructed Z mass from electron.png", signal.zMe, ttbar.zMe, otherb.zMe);
+  DrawHists(c, "constructed Z mass from muon.png", signal.zMm, ttbar.zMm, otherb.zMm);
+  DrawHists(c, "constructed Z mass from jet.png", signal.zMj, ttbar.zMj, otherb.zMj);
 
-  DrawHists(c, "number of lepton pairs for constructed Z2.png", signal.nl, ttbar.nl, otherb.nl);
-  DrawHists(c, "MET2.png", signal.met, ttbar.met, otherb.met);
-  DrawHists(c, "max PT of leptons2.png", signal.maxPT, ttbar.maxPT, otherb.maxPT);
-  DrawHists(c, "constructed Z PT from electron2.png", signal.zPTe, ttbar.zPTe, otherb.zPTe);
-  DrawHists(c, "constructed Z PT from muon2.png", signal.zPTm, ttbar.zPTm, otherb.zPTm);
-  DrawHists(c, "constructed Z PT from jet2.png", signal.zPTj, ttbar.zPTj, otherb.zPTj);
+  DrawHists(c, "number of lepton pairs for constructed Z.png", signal.nl, ttbar.nl, otherb.nl);
+  DrawHists(c, "MET.png", signal.met, ttbar.met, otherb.met);
+  DrawHists(c, "max PT of leptons.png", signal.maxPT, ttbar.maxPT, otherb.maxPT);
+  DrawHists(c, "constructed Z PT from electron.png", signal.zPTe, ttbar.zPTe, otherb.zPTe);
+  DrawHists(c, "constructed Z PT from muon.png", signal.zPTm, ttbar.zPTm, otherb.zPTm);
+  DrawHists(c, "constructed Z PT from jet.png", signal.zPTj, ttbar.zPTj, otherb.zPTj);
    
-  DrawHists(c, "number of electrons2.png", signal.nume, ttbar.nume, otherb.nume);
-  DrawHists(c, "number of muons2.png", signal.numm, ttbar.numm, otherb.numm);
-  DrawHists(c, "number of jets2.png", signal.numj, ttbar.numj, otherb.numj);
+  DrawHists(c, "number of electrons.png", signal.nume, ttbar.nume, otherb.nume);
+  DrawHists(c, "number of muons.png", signal.numm, ttbar.numm, otherb.numm);
+  DrawHists(c, "number of jets.png", signal.numj, ttbar.numj, otherb.numj);
 
-  DrawHists(c, "mass of ZZZ2.png", signal.mZZZ, ttbar.mZZZ, otherb.mZZZ);
-  DrawHists(c, "PT of ZZZ2.png", signal.ptZZZ, ttbar.ptZZZ, otherb.ptZZZ);
+  DrawHists(c, "mass of ZZZ.png", signal.mZZZ, ttbar.mZZZ, otherb.mZZZ);
+  DrawHists(c, "PT of ZZZ.png", signal.ptZZZ, ttbar.ptZZZ, otherb.ptZZZ);
 
-  DrawHists(c, "deltaR between electrons for the same Z2.png", signal.dre, ttbar.dre, otherb.dre);
-  DrawHists(c, "deltaR between muons for the same Z2.png", signal.drm, ttbar.drm, otherb.drm);
-  DrawHists(c, "min deltaR among the ZZZ2.png", signal.drZZZ, ttbar.drZZZ, otherb.drZZZ);*/
+  DrawHists(c, "deltaR between electrons for the same Z.png", signal.dre, ttbar.dre, otherb.dre);
+  DrawHists(c, "deltaR between muons for the same Z.png", signal.drm, ttbar.drm, otherb.drm);
+  DrawHists(c, "min deltaR among the ZZZ.png", signal.drZZZ, ttbar.drZZZ, otherb.drZZZ);
   /*DrawHists(c, "min deltaR among the ZZZ.png", signal.min, ttbar.min, otherb.min);
   DrawHists(c, "max deltaR among the ZZZ.png", signal.max, ttbar.max, otherb.max);
   DrawHists(c, "deltaR among the ZZZ.png", signal.all, ttbar.all, otherb.all);*/
@@ -522,7 +526,7 @@ void analysis() {
   myfile << "process zzz ttz tt www wzz wwz ww zz2l hzz zhzz zz4l zzz ttz tt www wzz wwz ww zz2l hzz zhzz zz4l zzz ttz tt www wzz wwz ww zz2l hzz zhzz zz4l zzz ttz tt www wzz wwz ww zz2l hzz zhzz zz4l zzz ttz tt www wzz wwz ww zz2l hzz zhzz zz4l zzz ttz tt www wzz wwz ww zz2l hzz zhzz zz4l zzz ttz tt www wzz wwz ww zz2l hzz zhzz zz4l" <<"\n";
   myfile << "process 0 1 2 3 4 5 6 7 8 9 10 0 1 2 3 4 5 6 7 8 9 10 0 1 2 3 4 5 6 7 8 9 10 0 1 2 3 4 5 6 7 8 9 10 0 1 2 3 4 5 6 7 8 9 10 0 1 2 3 4 5 6 7 8 9 10 0 1 2 3 4 5 6 7 8 9 10" <<"\n";
 
-  //myfile << "rate " << l3[0] << " " << l3[1] << " " << l3[2] << " " << l3[3] << " " <<	l3[4] << " " << l3[5] << " " <<	l3[6] << " " << l3[7] << " " <<	l2[0] << " " << l2[1] << " " << l2[2] << " " << l2[3] << " " <<	l2[4] << " " << l2[5] << " " <<	l2[6] << " " << l2[7] << " " << l1[0] << " " << l1[1] << " " << l1[2] << " " << l1[3] << " " <<	l1[4] << " " << l1[5] << " " <<	l1[6] << " " << l1[7] << " " << l0[0] << " " << l0[1] << " " << l0[2] << " " << l0[3] << " " <<	l0[4] << " " << l0[5] << " " <<	l0[6] << " " << l0[7] << "\n";
+  //myfile << "rate " << l3[0] << " " << l3[1] << " " << l3[2] << " " << l3[3] << " " << l3[4] << " " << l3[5] << " " <<	l3[6] << " " << l3[7] << " " <<	l2[0] << " " << l2[1] << " " << l2[2] << " " << l2[3] << " " <<	l2[4] << " " << l2[5] << " " <<	l2[6] << " " << l2[7] << " " << l1[0] << " " << l1[1] << " " << l1[2] << " " << l1[3] << " " <<	l1[4] << " " << l1[5] << " " <<	l1[6] << " " << l1[7] << " " << l0[0] << " " << l0[1] << " " << l0[2] << " " << l0[3] << " " <<	l0[4] << " " << l0[5] << " " <<	l0[6] << " " << l0[7] << "\n";
   myfile << "rate " << scale[0]*lll[0] << " " << scale[1]*lll[1] << " " << scale[2]*lll[2] << " " << scale[3]*lll[3] << " " <<  scale[4]*lll[4] << " " << scale[5]*lll[5] << " " << scale[6]*lll[6] << " " << scale[7]*lll[7] << " " << scale[8]*lll[8] << " " << scale[9]*lll[9] << " " << scale[10]*lll[10] << " " << scale[0]*eej[0] << " " << scale[1]*eej[1] << " " << scale[2]*eej[2] << " " << scale[3]*eej[3] << " " << scale[4]*eej[4] << " " << scale[5]*eej[5] << " " << scale[6]*eej[6] << " " << scale[7]*eej[7] << " " << scale[8]*eej[8] << " " << scale[9]*eej[9] << " " << scale[10]*eej[10] << " " << scale[0]*emj[0] << " " << scale[1]*emj[1] << " " << scale[2]*emj[2] << " " << scale[3]*emj[3] << " " << scale[4]*emj[4] << " " << scale[5]*emj[5] << " " << scale[6]*emj[6] << " " << scale[7]*emj[7] << " " << scale[8]*emj[8] << " " << scale[9]*emj[9] << " " << scale[10]*emj[10] << " " << scale[0]*mmj[0] << " " << scale[1]*mmj[1] << " " << scale[2]*mmj[2] << " " << scale[3]*mmj[3] << " " << scale[4]*mmj[4] << " " << scale[5]*mmj[5] << " " << scale[6]*mmj[6] << " " << scale[7]*mmj[7] << " " << scale[8]*mmj[8] << " " << scale[9]*mmj[9] << " " << scale[10]*mmj[10] << " " << scale[0]*ejj[0] << " " << scale[1]*ejj[1] << " " << scale[2]*ejj[2] << " " << scale[3]*ejj[3] << " " << scale[4]*ejj[4] << " " << scale[5]*ejj[5] << " " << scale[6]*ejj[6] << " " << scale[7]*ejj[7] << " " << scale[8]*ejj[8] << " " << scale[9]*ejj[9] << " " << scale[10]*ejj[10] << " " << scale[0]*mjj[0] << " " << scale[1]*mjj[1] << " " << scale[2]*mjj[2] << " " << scale[3]*mjj[3] << " " << scale[4]*mjj[4] << " " << scale[5]*mjj[5] << " " << scale[6]*mjj[6] << " " << scale[7]*mjj[7] << " " << scale[8]*mjj[8] << " " << scale[9]*mjj[9] << " " << scale[10]*mjj[10] << " " << scale[0]*jjj[0] << " " << scale[1]*jjj[1] << " " << scale[2]*jjj[2] << " " << scale[3]*jjj[3] << " " << scale[4]*jjj[4] << " " << scale[5]*jjj[5] << " " << scale[6]*jjj[6] << " " << scale[7]*jjj[7] << " " << scale[8]*jjj[8] << " " << scale[9]*jjj[9] << " " << scale[10]*jjj[10] << "\n";
   
   myfile << "--------------------------------" <<"\n";
@@ -664,7 +668,7 @@ Float_t selection(const TString inputfile, HistHolder hists, int &l3, int &l2, i
   
   TFile *inFile = new TFile(inputfile, "READ");
   TTree *inTree = (TTree*) inFile->Get("Events");
-  inTree->SetBranchAddress("eventWeight", &eventWeight);
+  inTree->SetBranchAddress("eventWeightN", &eventWeight);
   inTree->SetBranchAddress("nEl", &nEl);
   inTree->SetBranchAddress("nMu", &nMu);
   inTree->SetBranchAddress("nJet", &nJet);
@@ -677,6 +681,8 @@ Float_t selection(const TString inputfile, HistHolder hists, int &l3, int &l2, i
   inTree->SetBranchAddress("vJet", &vJet);
 
   Long64_t allEntries = inTree->GetEntries();
+  TH1D *hTot = (TH1D*) inFile->Get("hTot");
+  float nTot = hTot->GetBinContent(1);
 
   cout << "** File contains " << allEntries << " events" << endl;
   
@@ -704,8 +710,8 @@ Float_t selection(const TString inputfile, HistHolder hists, int &l3, int &l2, i
     //if (nEl==1) continue;
     //if (nMu==1) continue;
 
-    evtWeight = (eventWeight * LUMI) / allEntries;
-    //evtWeight = eventWeight;
+    //evtWeight = (eventWeight * LUMI) / nTot;
+    evtWeight = eventWeight * LUMI;
     
     float maxpt = 0;
 
@@ -1075,6 +1081,3 @@ Float_t selection(const TString inputfile, HistHolder hists, int &l3, int &l2, i
 
   return nCount;
 }
-
-
-
